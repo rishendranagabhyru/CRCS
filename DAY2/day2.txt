@@ -1,0 +1,305 @@
+Based on the topics visible in your image, here are concise **MongoDB notes with commands and sample outputs** using a **Student Database**.
+
+# 1. use
+
+Create or switch to a database.
+
+```
+use studentDB
+```
+
+Output:
+
+```
+switched to db studentDB
+```
+
+---
+
+# 2. createCollection()
+
+Create a collection.
+
+```
+db.createCollection("students")
+```
+
+Output:
+
+```
+{ ok: 1 }
+```
+
+---
+
+# 3. insertOne()
+
+Insert one document.
+
+```
+db.students.insertOne({
+ name:"Ravi",
+ age:20,
+ dept:"CSE"
+})
+```
+
+Output:
+
+```
+{
+ acknowledged: true,
+ insertedId: ObjectId("...")
+}
+```
+
+---
+
+# 4. insertMany()
+
+Insert multiple documents.
+
+```
+db.students.insertMany([
+ {name:"Sita",age:19,dept:"ECE"},
+ {name:"Ram",age:21,dept:"CSE"},
+ {name:"Gita",age:20,dept:"EEE"}
+])
+```
+
+Output:
+
+```
+{
+ acknowledged: true,
+ insertedIds: {
+  '0': ObjectId("..."),
+  '1': ObjectId("..."),
+  '2': ObjectId("...")
+ }
+}
+```
+
+---
+
+# 5. find()
+
+Display all documents.
+
+```
+db.students.find()
+```
+
+Output:
+
+```
+[
+ {name:"Ravi",age:20,dept:"CSE"},
+ {name:"Sita",age:19,dept:"ECE"},
+ {name:"Ram",age:21,dept:"CSE"},
+ {name:"Gita",age:20,dept:"EEE"}
+]
+```
+
+---
+
+# 6. findOne()
+
+Display first matching document.
+
+```
+db.students.findOne({name:"Ravi"})
+```
+
+Output:
+
+```
+{
+ name:"Ravi",
+ age:20,
+ dept:"CSE"
+}
+```
+
+---
+
+# 7. $gt (Greater Than)
+
+Find students older than 20.
+
+```
+db.students.find({age:{$gt:20}})
+```
+
+Output:
+
+```
+[
+ {name:"Ram",age:21,dept:"CSE"}
+]
+```
+
+---
+
+# 8. $set
+
+Used to modify field values.
+
+```
+{
+ $set:{age:22}
+}
+```
+
+No direct output. Used with update commands.
+
+---
+
+# 9. updateOne()
+
+Update one document.
+
+```
+db.students.updateOne(
+ {name:"Ravi"},
+ {$set:{age:22}}
+)
+```
+
+Output:
+
+```
+{
+ acknowledged:true,
+ matchedCount:1,
+ modifiedCount:1
+}
+```
+
+---
+
+# 10. updateMany()
+
+Update multiple documents.
+
+```
+db.students.updateMany(
+ {dept:"CSE"},
+ {$set:{dept:"AIML"}}
+)
+```
+
+Output:
+
+```
+{
+ acknowledged:true,
+ matchedCount:2,
+ modifiedCount:2
+}
+```
+
+---
+
+# 11. deleteOne()
+
+Delete one document.
+
+```
+db.students.deleteOne({name:"Sita"})
+```
+
+Output:
+
+```
+{
+ acknowledged:true,
+ deletedCount:1
+}
+```
+
+---
+
+# 12. deleteMany()
+
+Delete multiple documents.
+
+```
+db.students.deleteMany({dept:"EEE"})
+```
+
+Output:
+
+```
+{
+ acknowledged:true,
+ deletedCount:1
+}
+```
+
+---
+
+# 13. sort()
+
+Sort documents.
+
+Ascending:
+
+```
+db.students.find().sort({age:1})
+```
+
+Output:
+
+```
+19
+20
+21
+```
+
+Descending:
+
+```
+db.students.find().sort({age:-1})
+```
+
+Output:
+
+```
+21
+20
+19
+```
+
+---
+
+# 14. countDocuments()
+
+Count documents.
+
+```
+db.students.countDocuments()
+```
+
+Output:
+
+```
+3
+```
+
+---
+
+# Complete Sample Data
+
+```
+use studentDB
+
+db.createCollection("students")
+
+db.students.insertMany([
+ {name:"Ravi",age:20,dept:"CSE"},
+ {name:"Sita",age:19,dept:"ECE"},
+ {name:"Ram",age:21,dept:"CSE"},
+ {name:"Gita",age:20,dept:"EEE"}
+])
+```
